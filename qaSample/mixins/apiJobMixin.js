@@ -1,5 +1,5 @@
 export default {
-    method: {
+    methods: {
         removeErrors() {
             this.$validator.reset();
             this.$store.commit("clearError");
@@ -27,7 +27,7 @@ export default {
     watch: {
         jobDone(value) {
             this.$store.commit("setJobDone", false);
-            this.jobDone();
+            this.jobsDone();
         }
     }
 };
