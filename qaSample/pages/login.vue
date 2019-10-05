@@ -16,7 +16,7 @@
                                     type="email"
                                     name="email"
                                     v-model="email"
-                                    v-validate="'required|email'|"
+                                    v-validate="'required|email'"
                                     :class="{ 'is-danger': errors.has('email') }"
                                 />
                                 <p v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</p>
