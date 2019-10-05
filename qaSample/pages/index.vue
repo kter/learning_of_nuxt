@@ -49,7 +49,7 @@ export default {
         <div v-else>アカウントを作成して質問をしましょう！</div>
       </div>
       <div class="is-centered is-mobile">
-        <!-- ここに質問リスト -->
+        <QuestionList v-for="(q,index) in allQUestions" :key="index" :question="q" />
       </div>
     </section>
   </div>
