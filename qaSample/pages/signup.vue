@@ -1,3 +1,40 @@
+<script>
+import apiJobMixin from "@/mixins/apiJobMixin";
+
+export default {
+  data() {
+    return {
+      displayName: "",
+      email: "",
+      password: ""
+    };
+  },
+  mixins: [apiJobMixin],
+  methods: {
+    onSignUp() {
+      // vee-validateによるバリデーションチェック
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          const signUpData = {
+            displayName: this.displayName,
+            email: this.email,
+            password: this.password
+          };
+          // storeで定義したsignUpUserアクションにdispatch
+          this.$store.dispatch("signUpUser", signUpData);
+        }
+      });
+    },
+    jobsDone() {
+      // apiJobMixinで叩かれる
+      this.removeErrors();
+      // アカウント登録が完了したのでルートパスにリダイレクト
+      this.$router.replace("/");
+    }
+  }
+};
+</script>
+
 <template>
   <div>
     <section class="section no-tap-pad">
