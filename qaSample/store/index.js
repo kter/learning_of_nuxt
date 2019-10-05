@@ -89,6 +89,10 @@ export const actions = {
                 commit("setBusy", false);
                 commit("setError", error);
             });
+    },
+    logOut({ commit }) {
+        this.$fireApp.auth().signOut();
+        commit("setUser", null);
     }
 }
 
