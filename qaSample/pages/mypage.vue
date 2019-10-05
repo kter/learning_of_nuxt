@@ -1,3 +1,25 @@
+<script>
+export default {
+    methods: {
+        logOut() {
+            this.$store.dispatch("logOut");
+            this.$router.push("/");
+        }
+    },
+    computed: {
+        user() {
+            if (this.$store.getters.user) {
+                return this.$store.getters.user;
+            }
+
+            return {
+                name: "",
+                email: ""
+            };
+        }
+    }
+};
+</script>
 
 <template>
     <div>
