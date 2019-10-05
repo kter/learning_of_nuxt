@@ -1,9 +1,14 @@
 <script>
 import apiJobMixin from "@/mixins/apiJobMixin";
+// 作成したリスト用のコンポーネントを作成
+import QuestionList from "@/components/QUestionList";
 export default {
   data() {
     return {
+      // 入力されたinput用データ
       question: "",
+      // 質問用の全件リストデータ
+      questions: []
     };
   },
   mixins: [apiJobMixin],
@@ -19,6 +24,24 @@ export default {
     jobsDone() {
       console.log("job done");
     }
+  },
+  computed: {
+    allQuestions() {
+      // computedでgetterを使い質問全件を取得
+      return this.$store.getters["question/questionsAll"];
+    }
+  },
+  // SSR処理を行うためfetch
+  async fetch({ app, store }) {
+    // fetchメソッドでSSR用のデータをfetchする
+    // 既にfetchメソッドを使うなら再度Ajaxを叩かないようにする
+    if (store.getters["question/questionAll"].length > 0) {
+      return;
+    }
+
+    // storeのfetchQuestionsAllアクションを叩く
+    // storeのstateにデータがキャッシュされ、getterで取得する
+    await store.dispatch("question/fetchQuestionsAll");
   }
 };
 </script>
