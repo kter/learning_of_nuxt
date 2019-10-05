@@ -1,3 +1,41 @@
+<script>
+import apiJobMixin from "@/mixins/apiJobMixin";
+
+export default {
+    data() {
+        return {
+            email: "",
+            password: ""
+        };
+    },
+    mixins: [apiJobMixin],
+    beforeCreate() {
+        const loggedIn = this.$store.getters.loginStatus;
+        if (loggedIn) {
+            // ログイン済みならルートページへ遷移
+            this.$router.replace("/");
+        }
+    },
+    methods: {
+        onLogin() {
+            this.$validator.validateAll().then(result => {
+                if (result) {
+                    const loginData = {
+                        email: this.email,
+                        password: this.password
+                    };
+                    // storeに作成したloginUserへdispatch
+                    this.$store.dispatch("loginUser", loginData);
+                }
+            });
+        },
+        jobsDone() {
+            this.removeErrors();
+            this.$router.replace("/");
+        }
+    }
+};
+</script>
 
 <template>
     <div>
