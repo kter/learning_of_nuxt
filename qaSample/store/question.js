@@ -64,7 +64,7 @@ export const actions = {
                 }
             });
         }
-        // mutation setQUestionsAllにコミット
+        // mutation setQuestionsAllにコミット
         commit("setQuestionsAll", storeData);
     }
 };

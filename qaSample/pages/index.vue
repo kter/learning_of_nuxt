@@ -1,7 +1,7 @@
 <script>
 import apiJobMixin from "@/mixins/apiJobMixin";
 // 作成したリスト用のコンポーネントを作成
-import QuestionList from "@/components/QUestionList";
+import QuestionList from "@/components/QuestionList";
 export default {
   data() {
     return {
@@ -12,6 +12,9 @@ export default {
     };
   },
   mixins: [apiJobMixin],
+  components: {
+    QuestionList
+  },
   methods: {
     onQuestion() {
       let userID = this.$store.getters.user.id;
@@ -35,7 +38,7 @@ export default {
   async fetch({ app, store }) {
     // fetchメソッドでSSR用のデータをfetchする
     // 既にfetchメソッドを使うなら再度Ajaxを叩かないようにする
-    if (store.getters["question/questionAll"].length > 0) {
+    if (store.getters["question/questionsAll"].length > 0) {
       return;
     }
 
@@ -72,7 +75,7 @@ export default {
         <div v-else>アカウントを作成して質問をしましょう！</div>
       </div>
       <div class="is-centered is-mobile">
-        <QuestionList v-for="(q,index) in allQUestions" :key="index" :question="q" />
+        <QuestionList v-for="(q,index) in allQuestions" :key="index" :question="q" />
       </div>
     </section>
   </div>

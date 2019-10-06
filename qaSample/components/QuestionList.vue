@@ -1,9 +1,9 @@
 
-<template lang="pug">
+<template>
     <article class="media">
         <div class="media-content">
             <div class="content">
-                <nuxt-link :to="'/question/${question.id}'">
+                <nuxt-link :to="`/question/${question.id}`">
                     <p>
                         <strong>{{question.title}}</strong>
                     </p>
@@ -16,7 +16,7 @@
                         <small>{{this.$moment(question.createdAt).format("YYYY.MM.DD - h:mm a")}}</small>
                     </p>
                 </div>
-                <!-- 編集・削除ボタン ->>
+                <!-- 編集・削除ボタン -->
             </nav>
         </div>
         <!-- 編集・削除モーダル -->
