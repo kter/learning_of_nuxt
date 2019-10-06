@@ -66,6 +66,39 @@ export const actions = {
         }
         // mutation setQuestionsAllにコミット
         commit("setQuestionsAll", storeData);
+    },
+    async updateQuestion({ commit, state, dispatch }, payload) {
+        commit("setBusy", true, { root: true });
+        commit("clearError", null, { root: true });
+        const db = this.$fireApp.firestore();
+        await db
+            .collection("questions")
+            .doc(payload.id)
+            .update({
+                title: payload.updateText,
+                updateAt: new Date().toISOString()
+            })
+            .then(() => {
+                console.log("Document successfully update!");
+                commit("setBusy", false, { root: true });
+                commit("setJobDone", true, { root: true });
+            });
+    dispatch("fetchQuestionsAll");
+    },
+    async removeQuestion({ commit, state, dispatch }, payload) {
+        commit("setBusy", true, { root: true });
+        commit("clearError", null, { root: true });
+        const db = this.$fireApp.firestore();
+        await db
+            .collection("questions")
+            .doc(payload)
+            .delete()
+            .then(function() {
+                console.log("Document successfully delete question!");
+                commit("setBusy", false, { root: true });
+                commit("setJobDone", true, { root: true });
+            });
+        dispatch("fetchQuestionsAll");
     }
 };
 
