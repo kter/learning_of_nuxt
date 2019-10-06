@@ -1,11 +1,16 @@
 export const state = () => ({
     // すべての質問データを格納する配列
-    questions: []
+    questions: [],
+    // 1件の質問データ
+    question: {}
 });
 
 export const mutations = {
     setQuestionsAll(state, payload) {
         state.questions = payload;
+    },
+    setQuestion(state, payload) {
+        state.question = payload;
     }
 };
 
@@ -99,11 +104,39 @@ export const actions = {
                 commit("setJobDone", true, { root: true });
             });
         dispatch("fetchQuestionsAll");
+    },
+    async fetchQuestion({ commit, state}, questionId) {
+        // データベースを取得
+        const db = this.$fireApp.firestore();
+        // 質問1件にアクセス
+        const querySnapshot = await db
+            .collection("questions")
+            .doc(questionId)
+            .get();
+
+        // リレーションのユーザーデータを取得
+        const userQuerySnapshot = await querySnapshot.data().userRef.get();
+        // ユーザーIDを取得
+        const userID = await querySnapshot.data().userRef.id;
+
+        // 1件の質問データをmutationsにコミット
+        commit("setQuestion", {
+            title: querySnapshot.data().title,
+            id: questionId,
+            createdAt: querySnapshot.data().createdAt,
+            user: {
+                ...userQuerySnapshot.data(),
+                id: userID
+            }
+        });
     }
 };
 
 export const getters = {
     questionsAll(state) {
         return state.questions;
+    },
+    question(state) {
+        return state.question;
     }
 };
