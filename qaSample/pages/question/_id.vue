@@ -29,3 +29,25 @@
         <!-- ここに回答の入力 -->
     </section>
 </template>
+<script>
+import apiJobMixin from "@/mixins/apiJobMixin";
+export default {
+    computed: {
+        question() {
+            return this.$store.getters["question/question"];
+        }
+    },
+    methods: {
+        jobsDone() {
+            console.log("job done");
+        }
+    },
+    mixins: [apiJobMixin],
+    async fetch({ app, route, store }) {
+        // URLから質問IDを取得
+        let questionId = route.params.id;
+        // アクションにdispatch
+        await store.dispatch("question/fetchQuestion", questionId);
+    }
+};
+</script>
