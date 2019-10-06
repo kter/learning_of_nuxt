@@ -27,6 +27,22 @@
             </article>
         </div>
         <!-- ここに回答の入力 -->
+        <br />
+        <article class="media">
+            <div v-if="isLogin" class="media-content">
+                <div class="field">
+                    <p class="control">
+                        <textareea class="textarea" v-model="answer" placeholder="回答を入力して下さい！"></textareea>
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control">
+                        <button class="button" @click="onAnswer">質問に回答</button>
+                    </p>
+                </div>
+            </div>
+            <div v-else>アカウントを作成して質問に回答しましょう！</div>
+        </article>
     </section>
 </template>
 <script>
